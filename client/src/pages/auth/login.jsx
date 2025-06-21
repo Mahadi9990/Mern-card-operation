@@ -1,7 +1,10 @@
 import CommonFrom from "@/components/common/form";
-import { loginConfig } from "@/config";
+import { loginConfig } from "@/config/index.js";
+import { loginUser } from "@/store/auth-slice/index.js";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 const initailState={
     email:"",
     password:""
@@ -9,8 +12,16 @@ const initailState={
 function AuthLogin() {
     
     const [formData, setformData] = useState(initailState);
-    function onSubmit (){
-
+    const dispatch =useDispatch()
+    function onSubmit (event){
+        event.preventDefault()
+        dispatch(loginUser(formData)).then((data)=>{
+            if(data?.payload?.success){
+                toast(data?.payload?.message)
+            }else{
+                toast(data?.payload?.message)
+            }
+        }  )
     }
     return ( <div className="mx-auto w-full max-w-md space-y-6">
         <div className="text-center">

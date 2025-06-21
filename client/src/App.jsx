@@ -16,10 +16,10 @@ import ShopingAccount from "./pages/shopping-view/accoutn";
 import ShopingChackout from "./pages/shopping-view/chackout";
 import CheackAuth from "./components/common/check-auth";
 import UnatuthPage from "./pages/unAuthPage";
+import { useSelector } from "react-redux";
 
 function App() {
-  const isAuthenticated=false
-  const user=null
+  const {user,isAuthenticated}=useSelector((state)=>state.auth)
   return (<div className="flex flex-col overflow-hidden bg-white">
     <h1>Header Component</h1>
     <Routes>

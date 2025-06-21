@@ -22,8 +22,10 @@ function AuthRegister() {
 
         dispatch(registerUser(formData)).then((data)=>{
             if(data?.payload?.success){
-                toast(data?.payload?.message)
                 navigate('/auth/login')
+                toast(data?.payload?.message)
+            }else{
+                toast(data?.payload?.message)
             }
         }  )
 
