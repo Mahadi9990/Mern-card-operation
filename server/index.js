@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import authRoute from "./routes/auth/auth.route.js"
+ 
 
 mongoose.connect("mongodb+srv://admahadi1234:admahadi1234@cluster0.1y7wcib.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(()=>console.log("Mongoose is Connected")).catch((error)=>console.log(error))
@@ -30,3 +31,4 @@ app.use("/api/auth",authRoute)
 
 
 app.listen(PORT,()=>(console.log(`Server is running on ${PORT}`)))
+

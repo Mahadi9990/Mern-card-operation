@@ -14,7 +14,6 @@ const initailState={
 function AuthRegister() {
     
     const [formData, setFormData] = useState(initailState);
-    console.log(formData)
     const dispatch = useDispatch()
     const navigate =useNavigate()
     function onSubmit (event){

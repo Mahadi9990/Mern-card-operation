@@ -60,7 +60,7 @@ const cheackPassword = await bcrypejs.compare(password,cheackUser.password)
         id:cheackUser._id ,role:cheackUser.role,email:cheackUser.email
     },'CLIENT_SECTECT_KEY',{expiresIn:'60m'})
 
-    res.cookie("access_token",token,{httpOnly:true,success:true})
+    res.cookie("access_token",token,{httpOnly:true,success:false})
     .json({
         success:true,
         message:"Login successfully",
@@ -82,6 +82,32 @@ const cheackPassword = await bcrypejs.compare(password,cheackUser.password)
 
 // logout
 
+export const logoutUser = async(req,res)=>{
+    res.cleaCookie("access_token").json({
+        success:true,
+        message:"Logout Successfully"
+    })
+}
 
 // auth middleware
 
+
+
+
+export const authMiddleware = async (req,res,next)=>{
+    const token =req.cookies.access_token
+    if(!token) return res.status(401).json({
+        success:false,
+        message:"unauthorize user"
+    })
+    try {
+        const decoded = jwt.verify(token,'CLIENT_SECTECT_KEY')
+        req.user = decoded
+        next()
+    } catch (error) {
+        res.status(401).json({
+        success:false,
+        message:"unauthorize user"
+    })
+    }
+}

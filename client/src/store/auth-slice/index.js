@@ -23,6 +23,19 @@ export const loginUser =createAsyncThunk("/auth/loign",
         return response.data
     }
 )
+export const checkAuth = createAsyncThunk("/auth/checkauth",
+    async()=>{
+        const response =await axios.get("http://localhost:3000/api/auth/checkauth",{
+            withCredentials:true,
+            headers:{
+                "Cache-Control":"no-store ,no-cache,must-revalidate,porxy-revalidate"
+            },
+        })
+        return response.data
+    }
+    
+)
+
 
 const authSlice =createSlice({
     name:'auth',
@@ -45,13 +58,24 @@ const authSlice =createSlice({
             state.isloading = true
         }).addCase(loginUser.fulfilled,(state,action)=>{
             state.isloading = false,
-            state.isAuthenticated = !action.payload.success? false : true,
-            state.user = !action.payload.success? null : action.payload.user
+            state.user = action.payload.success
+            state.isAuthenticated = action.payload.success? true : false
         }).addCase(loginUser.rejected,(state)=>{
-            state.isAuthenticated = false,
             state.isloading = false,
             state.user = null
+            state.isAuthenticated = false
+        }).addCase(checkAuth.pending ,(state)=>{
+            state.isloading = true
+        }).addCase(checkAuth.fulfilled,(state,action)=>{
+            state.isloading = false,
+            state.user = action.payload.success
+            state.isAuthenticated = action.payload.success? true : false
+        }).addCase(checkAuth.rejected,(state,action)=>{
+            state.isAuthenticated = false,
+            state.user = null
+            state.isloading = false
         })
+        
     }
 
 })

@@ -16,10 +16,16 @@ import ShopingAccount from "./pages/shopping-view/accoutn";
 import ShopingChackout from "./pages/shopping-view/chackout";
 import CheackAuth from "./components/common/check-auth";
 import UnatuthPage from "./pages/unAuthPage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./store/auth-slice";
 
 function App() {
   const {user,isAuthenticated}=useSelector((state)=>state.auth)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(checkAuth())
+  }, [dispatch]);
   return (<div className="flex flex-col overflow-hidden bg-white">
     <h1>Header Component</h1>
     <Routes>
@@ -37,7 +43,6 @@ function App() {
         <Route path="orders" element={<AdminOrders/> }/>
         <Route path="products" element={<AdminProducts/> }/>
         <Route path="features" element={<AdminFeatures/> }/>
-
       </Route>
       <Route path="/shop" element={<CheackAuth isAuthenticated={isAuthenticated} user={user}>
         <ShopingLayout/>
