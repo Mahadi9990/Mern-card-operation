@@ -58,21 +58,21 @@ const authSlice =createSlice({
             state.isloading = true
         }).addCase(loginUser.fulfilled,(state,action)=>{
             state.isloading = false,
-            state.user = action.payload.success
+            state.user = action.payload.success ? action.payload.user: null,
             state.isAuthenticated = action.payload.success? true : false
         }).addCase(loginUser.rejected,(state)=>{
             state.isloading = false,
-            state.user = null
+            state.user = null,
             state.isAuthenticated = false
         }).addCase(checkAuth.pending ,(state)=>{
             state.isloading = true
         }).addCase(checkAuth.fulfilled,(state,action)=>{
             state.isloading = false,
-            state.user = action.payload.success
+            state.user = action.payload.success ? action.payload.user: null,
             state.isAuthenticated = action.payload.success? true : false
         }).addCase(checkAuth.rejected,(state,action)=>{
             state.isAuthenticated = false,
-            state.user = null
+            state.user = null,
             state.isloading = false
         })
         

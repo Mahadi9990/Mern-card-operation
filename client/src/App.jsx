@@ -31,7 +31,6 @@ function App() {
   if(isloading) return <Skeleton className="h-[20px] bg-black w-[100px] rounded-full" />
 
   return (<div className="flex flex-col overflow-hidden bg-white">
-    <h1>Header Component</h1>
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/auth" element={<CheackAuth isAuthenticated={isAuthenticated} user={user}>
